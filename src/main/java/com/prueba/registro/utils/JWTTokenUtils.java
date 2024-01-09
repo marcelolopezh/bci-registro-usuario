@@ -22,7 +22,7 @@ public class JWTTokenUtils {
                 .claim("authorities",
                         grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 43200000)) // 12 horas 43200000
+                .setExpiration(new Date(System.currentTimeMillis() + 300000)) // 5 mins
                 .signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
 
         return "Bearer " + token;

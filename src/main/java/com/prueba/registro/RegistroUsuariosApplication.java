@@ -27,7 +27,7 @@ public class RegistroUsuariosApplication {
             http.csrf().disable()
                     .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .antMatchers(HttpMethod.POST, "/").permitAll()
+                    .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .anyRequest().authenticated();
             http.cors().and();

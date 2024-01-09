@@ -11,4 +11,6 @@ public class Constantes {
     public static final String AUTENTICACION_FALLIDA = "Correo o Contraseña no coinciden";
     public static final String AUTENTICACION_CORRECTA = "Inicio de sesión con éxito";
     public static final String ELIMINAR_USUARIO = "Se ha eliminado el usuario";
+    public static final String USUARIO_MODIFICADO = "Se ha modificado el usuario";
+    public static final String USUARIO_ERROR = "Se ha producido un error al intentar actualizar un usuario";
 }

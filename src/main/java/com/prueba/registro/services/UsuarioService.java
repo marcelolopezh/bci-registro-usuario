@@ -36,7 +36,11 @@ public class UsuarioService {
     public ResponseEntity<Map<String, Object>> almacenarUsuario(Usuario usuario) throws Exception {
         Map<String, Object> response = new HashMap<>();
         ResponseEntity<Map<String, Object>> validacion;
-        validacion = validarDatosEntrada(usuario, response);
+        if(!validarDatosEntrada(usuario)){
+            response.put(Constantes.MENSAJE, Constantes.ERROR_CONTRASENA);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
         validacion = esUsuarioValido(usuario, response);
         if (validacion != null) {
             return validacion;
@@ -58,32 +62,31 @@ public class UsuarioService {
         }
     }
 
-    private ResponseEntity<Map<String, Object>> validarDatosEntrada(Usuario usuario, Map<String, Object> response) {
-        if(usuario.getNombre().isEmpty() || !usuario.getContrasena().matches(patternContrasena)){
-            response.put(Constantes.MENSAJE, Constantes.ERROR_CONTRASENA);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-        return null;
+    private Boolean validarDatosEntrada(Usuario usuario) {
+        return !usuario.getNombre().isEmpty() && usuario.getContrasena().matches(patternContrasena);
     }
 
     public ResponseEntity<Map<String, Object>> esUsuarioValido(Usuario usuario, Map<String, Object> response) {
         if(response.get(Constantes.MENSAJE) != null){
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        Pattern pattern = Pattern.compile(this.patternEmail);
-
-        Matcher matcher = pattern.matcher(usuario.getCorreo());
-        if (!matcher.find()) {
+        if(!verificarCorreo(usuario)){
             response.put(Constantes.MENSAJE, Constantes.CORREO_FORMATO_INVALIDO);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST) ;
         }
 
         Optional<Usuario> usuariodb = usuarioRepository.findByCorreo(usuario.getCorreo());
         if(usuariodb.isPresent()){
             response.put(Constantes.MENSAJE, Constantes.CORREO_DUPLICADO);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return  new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return null;
+    }
+
+    private Boolean verificarCorreo(Usuario usuario) {
+        Pattern pattern = Pattern.compile(this.patternEmail);
+        Matcher matcher = pattern.matcher(usuario.getCorreo());
+        return matcher.find();
     }
 
     public ResponseEntity<Map<String, Object>> obtenerUsuarios() {
@@ -98,5 +101,40 @@ public class UsuarioService {
         Map<String, Object> response = new HashMap<>();
         response.put(Constantes.MENSAJE, Constantes.ELIMINAR_USUARIO);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> actualizarUsuario(Long id, Usuario usuario) {
+        Map<String, Object> response = new HashMap<>();
+        Boolean validacion;
+        if(!validarDatosEntrada(usuario)){
+            response.put(Constantes.MENSAJE, Constantes.ERROR_CONTRASENA);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        validacion = verificarCorreo(usuario);
+        if (!validacion) {
+            response.put(Constantes.MENSAJE, Constantes.ERROR_CONTRASENA);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        Optional<Usuario> usuariodb = usuarioRepository.findByCorreo(usuario.getCorreo());
+        if(usuariodb.isPresent()){
+            usuariodb.get().setNombre(usuario.getNombre());
+
+            String hashedContrasena = BCryptUtils.hashedContrasena(usuario.getContrasena());
+            usuariodb.get().setContrasena(hashedContrasena);
+
+            usuariodb.get().setCorreo(usuario.getCorreo());
+
+            try{
+                usuarioRepository.save(usuariodb.get());
+                response.put(Constantes.MENSAJE, Constantes.USUARIO_MODIFICADO);
+                response.put(Constantes.USUARIO, usuariodb);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } catch (Exception e) {
+                response.put(Constantes.MENSAJE, e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+        }
+        response.put(Constantes.MENSAJE, Constantes.USUARIO_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
