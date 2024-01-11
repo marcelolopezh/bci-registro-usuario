@@ -1,5 +1,7 @@
 # Registro Usuario API
 
+![Diagrama flujo de datos](https://raw.githubusercontent.com/marcelolopezh/bci-registro-usuario/539973188d10d71e6408e1bf8b49e05e545d977b/Diagrama%20Flujo%20Datos.png)
+
 ### Características 
 
 - Registro de Usuario
