@@ -13,4 +13,5 @@ public class Constantes {
     public static final String ELIMINAR_USUARIO = "Se ha eliminado el usuario";
     public static final String USUARIO_MODIFICADO = "Se ha modificado el usuario";
     public static final String USUARIO_ERROR = "Se ha producido un error al intentar actualizar un usuario";
+    public static final String USUARIO_NO_ENCONTRADO = "Usuario no encontrado";
 }

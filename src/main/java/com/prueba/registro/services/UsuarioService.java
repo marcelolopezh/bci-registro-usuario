@@ -138,4 +138,24 @@ public class UsuarioService {
         response.put(Constantes.MENSAJE, Constantes.USUARIO_ERROR);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    public ResponseEntity<Map<String, Object>> actualizarCorreoUsuario(Long id, String correo) {
+        Map<String, Object> response = new HashMap<>();
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if(!usuario.isPresent()){
+            response.put(Constantes.MENSAJE, Constantes.USUARIO_NO_ENCONTRADO);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } else {
+            usuario.get().setCorreo(correo);
+            if (verificarCorreo(usuario.get())) {
+                Usuario usuariodb = usuarioRepository.save(usuario.get());
+                response.put(Constantes.MENSAJE, Constantes.USUARIO_MODIFICADO);
+                response.put(Constantes.USUARIO, usuariodb);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                response.put(Constantes.MENSAJE, Constantes.CORREO_FORMATO_INVALIDO);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
 }
