@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "4789d8cc-f071-4c8b-9c55-b30ae74b0f35",
+		"name": "RegistroUsuarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32224498"
+	},
+	"item": [
+		{
+			"name": "Crear Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\" : \"Marcelo\",\n    \"correo\" : \"marcelolopezhernandez3@gmail.com\",\n    \"contrasena\" : \"aSdW1019!\",\n    \"telefonos\" : [\n        {\n            \"numero\" : \"993677499\",\n            \"codigoCiudad\" : \"1\",\n            \"codigoPais\" : \"4\"\n        },\n        {\n            \"numero\" : \"993675215\",\n            \"codigoCiudad\" : \"51\",\n            \"codigoPais\" : \"101\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Sesión",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"correo\":\"marcelolopezhernandez3@gmail.com\",\n    \"contrasena\" : \"aSdW1019!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Usuario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI2M2FhYzJhOS1lOTdjLTRmZTQtYWRkMy0xYTZmYjkxMWQ1ZmIiLCJzdWIiOiIxIDIwMjQtMDEtMTEgMTI6Mjg6MzcuNjQ0IiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcwNDk4NjkxNywiZXhwIjoxNzA0OTg3MjE3fQ.fT2bIdI5EQKgpjY3PqYsYb6jVJSeAlvoKLCTeQUXuqP0wE50jbNAmKdz6eFYl6gPItme2HW6aPENVLYS4fPZFg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Marcelo\",\n    \"correo\": \"marcelolopezhernandez3@gmail.com\",\n    \"contrasena\": \"asdf124Aawe2\",\n    \"token\": null,\n    \"activo\": false,\n    \"telefonos\": [\n        {\n            \"id\": 1,\n            \"numero\": \"1234\",\n            \"codigoCiudad\": \"1124\",\n            \"codigoPais\": \"4444\"\n        },\n        {\n            \"id\": 2,\n            \"numero\": \"7547\",\n            \"codigoCiudad\": \"55551\",\n            \"codigoPais\": \"111\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1NDUwZGQwOC05YjRmLTQyYzYtOGJjOS1lYTYzNTFlOWVlMGIiLCJzdWIiOiIxIDIwMjQtMDEtMTEgMTI6MjM6MDQuMzY2IiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcwNDk4NjU4NCwiZXhwIjoxNzA0OTg2ODg0fQ.GCdN3r8LHA0zqbO9irRtcI8ckG4pXlHL44cFFQ5veWMXY5guV25Iq_eQ63v_YS-mFaAytdVdaETvp1uBvTiokw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI2M2FhYzJhOS1lOTdjLTRmZTQtYWRkMy0xYTZmYjkxMWQ1ZmIiLCJzdWIiOiIxIDIwMjQtMDEtMTEgMTI6Mjg6MzcuNjQ0IiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcwNDk4NjkxNywiZXhwIjoxNzA0OTg3MjE3fQ.fT2bIdI5EQKgpjY3PqYsYb6jVJSeAlvoKLCTeQUXuqP0wE50jbNAmKdz6eFYl6gPItme2HW6aPENVLYS4fPZFg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Correo",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzYjcyNGRmMS04MmIyLTQ2NTQtYmU4Ny01NGNlNGQ1OWI5NmUiLCJzdWIiOiIxIDIwMjQtMDEtMTEgMTM6MTg6MTAuNDk2IiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTcwNDk4OTg5MCwiZXhwIjoxNzA0OTkwMTkwfQ.eTDUm4_td2wlNhXHpsIngGAYWCTAKXrKtBOq9G_j_TuvAmWHoyK1zsi1Q6Pnjzxs_KdEo5Aov7CTPTcBEll7iA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1?correo=asd@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1"
+					],
+					"query": [
+						{
+							"key": "correo",
+							"value": "asd@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
