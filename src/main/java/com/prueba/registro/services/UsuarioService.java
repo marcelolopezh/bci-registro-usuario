@@ -115,7 +115,7 @@ public class UsuarioService {
             response.put(Constantes.MENSAJE, Constantes.ERROR_CONTRASENA);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        Optional<Usuario> usuariodb = usuarioRepository.findByCorreo(usuario.getCorreo());
+        Optional<Usuario> usuariodb = usuarioRepository.findById(id);
         if(usuariodb.isPresent()){
             usuariodb.get().setNombre(usuario.getNombre());
 

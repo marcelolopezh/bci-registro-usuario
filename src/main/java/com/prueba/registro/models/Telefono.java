@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name="telefonos")
 public class Telefono {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String numero;
