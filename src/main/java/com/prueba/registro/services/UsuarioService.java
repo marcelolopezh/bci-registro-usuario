@@ -118,16 +118,17 @@ public class UsuarioService {
         Optional<Usuario> usuariodb = usuarioRepository.findById(id);
         if(usuariodb.isPresent()){
             usuariodb.get().setNombre(usuario.getNombre());
-
             String hashedContrasena = BCryptUtils.hashedContrasena(usuario.getContrasena());
             usuariodb.get().setContrasena(hashedContrasena);
-
             usuariodb.get().setCorreo(usuario.getCorreo());
-
             try{
-                usuarioRepository.save(usuariodb.get());
+                Usuario usuarioModificado = usuarioRepository.save(usuariodb.get());
+                for(Telefono tel : usuario.getTelefonos()){
+                    tel.setUsuario(usuarioModificado);
+                    telefonoRepository.save(tel);
+                }
                 response.put(Constantes.MENSAJE, Constantes.USUARIO_MODIFICADO);
-                response.put(Constantes.USUARIO, usuariodb);
+                response.put(Constantes.USUARIO, usuarioRepository.findById(usuarioModificado.getId()));
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } catch (Exception e) {
                 response.put(Constantes.MENSAJE, e.getMessage());
